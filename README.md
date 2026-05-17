@@ -41,42 +41,39 @@ The application consists of a React + TypeScript frontend and an Express + SQLit
 - sql.js — SQLite implementation (pure JavaScript, no native build tools required)
 - CORS middleware
 
----
-
 ## Project Structure
-news-article-assignment/
-├── client/                       # React frontend
-│   ├── src/
-│   │   ├── components/           # Reusable UI components
-│   │   │   ├── ArticleCard.tsx
-│   │   │   ├── Navbar.tsx
-│   │   │   └── PaginationControls.tsx
-│   │   ├── pages/                # Top-level page components
-│   │   │   ├── ArticleFormPage.tsx
-│   │   │   └── ArticleListPage.tsx
-│   │   ├── schemas/              # Zod validation schemas
-│   │   │   └── articleSchema.ts
-│   │   ├── services/             # API service layer (Axios)
-│   │   │   └── articleService.ts
-│   │   ├── types/                # Shared TypeScript types
-│   │   │   └── article.ts
-│   │   ├── App.tsx               # Root component with routes
-│   │   └── main.tsx              # Entry point
-│   └── vite.config.ts            # Vite config with /api proxy
-├── server/                       # Express backend
-│   ├── src/
-│   │   ├── db/
-│   │   │   └── database.ts       # SQLite setup and seeding
-│   │   ├── routes/
-│   │   │   └── articles.ts       # CRUD endpoints
-│   │   ├── types/
-│   │   │   └── article.ts        # Shared types
-│   │   └── index.ts              # Express server entry
-│   └── tsconfig.json
-├── .gitignore
-└── README.md
 
----
+    news-article-assignment/
+    ├── client/                       # React frontend
+    │   ├── src/
+    │   │   ├── components/           # Reusable UI components
+    │   │   │   ├── ArticleCard.tsx
+    │   │   │   ├── Navbar.tsx
+    │   │   │   └── PaginationControls.tsx
+    │   │   ├── pages/                # Top-level page components
+    │   │   │   ├── ArticleFormPage.tsx
+    │   │   │   └── ArticleListPage.tsx
+    │   │   ├── schemas/              # Zod validation schemas
+    │   │   │   └── articleSchema.ts
+    │   │   ├── services/             # API service layer (Axios)
+    │   │   │   └── articleService.ts
+    │   │   ├── types/                # Shared TypeScript types
+    │   │   │   └── article.ts
+    │   │   ├── App.tsx               # Root component with routes
+    │   │   └── main.tsx              # Entry point
+    │   └── vite.config.ts            # Vite config with /api proxy
+    ├── server/                       # Express backend
+    │   ├── src/
+    │   │   ├── db/
+    │   │   │   └── database.ts       # SQLite setup and seeding
+    │   │   ├── routes/
+    │   │   │   └── articles.ts       # CRUD endpoints
+    │   │   ├── types/
+    │   │   │   └── article.ts        # Shared types
+    │   │   └── index.ts              # Express server entry
+    │   └── tsconfig.json
+    ├── .gitignore
+    └── README.md
 
 ## Getting Started
 
