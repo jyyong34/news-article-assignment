@@ -1,62 +1,220 @@
-# News-Article
-Take-home assignment for front-end developer.
+# News Article Manager
+
+A full-stack CRUD application for managing news articles, built as a take-home assignment for Handshakes.ai.
+
+The application consists of a React + TypeScript frontend and an Express + SQLite backend, allowing users to create, view, edit, search, and delete news articles with pagination support.
+
+---
+
+## Features
+
+### Core Features
+- Create new articles via a validated form
+- View all articles in a paginated list
+- Update existing articles (pre-filled form)
+- Form validation with React Hook Form + Zod (required fields, length constraints, future-date prevention)
+- Two-page navigation via React Router
+- Persistent storage in a SQLite database
+
+### Bonus Features
+- Refresh button to reload articles
+- Delete articles with confirmation dialog
+- Pagination (5 articles per page)
+- Live search (debounced, filters by title or publisher, backend-driven SQL LIKE query)
+- Success / error feedback for all user actions
+- Loading states during async operations
+
+---
+
+## Tech Stack
+
+### Frontend (`client/`)
+- Vite + React 18 + TypeScript
+- React Router v6 — page routing
+- Axios — HTTP client
+- React Bootstrap + Bootstrap 5 — UI components and styling
+- React Hook Form + Zod — form state management and validation
+
+### Backend (`server/`)
+- Express — web framework
+- TypeScript
+- sql.js — SQLite implementation (pure JavaScript, no native build tools required)
+- CORS middleware
+
+---
+
+## Project Structure
+news-article-assignment/
+├── client/                       # React frontend
+│   ├── src/
+│   │   ├── components/           # Reusable UI components
+│   │   │   ├── ArticleCard.tsx
+│   │   │   ├── Navbar.tsx
+│   │   │   └── PaginationControls.tsx
+│   │   ├── pages/                # Top-level page components
+│   │   │   ├── ArticleFormPage.tsx
+│   │   │   └── ArticleListPage.tsx
+│   │   ├── schemas/              # Zod validation schemas
+│   │   │   └── articleSchema.ts
+│   │   ├── services/             # API service layer (Axios)
+│   │   │   └── articleService.ts
+│   │   ├── types/                # Shared TypeScript types
+│   │   │   └── article.ts
+│   │   ├── App.tsx               # Root component with routes
+│   │   └── main.tsx              # Entry point
+│   └── vite.config.ts            # Vite config with /api proxy
+├── server/                       # Express backend
+│   ├── src/
+│   │   ├── db/
+│   │   │   └── database.ts       # SQLite setup and seeding
+│   │   ├── routes/
+│   │   │   └── articles.ts       # CRUD endpoints
+│   │   ├── types/
+│   │   │   └── article.ts        # Shared types
+│   │   └── index.ts              # Express server entry
+│   └── tsconfig.json
+├── .gitignore
+└── README.md
+
+---
 
 ## Getting Started
-Please review the information in this section before you get started with your development. 
-* Create a personal fork of the project on Github.
-* Clone the fork on to your local machine.
-* Implement your solution and the rest of git basics applies.
-* When you are ready, submit for review by providing the link of your forked repo to our recruitment team.
 
-### Requirements:
-* Use TypeScript and React to build the application.
-* Use any CSS framework or libraries (e.g., Bootstrap, Material-UI) to style your components.
-* Use a router library like React Router to handle page navigation.
-* Use an API library like Axios for making HTTP requests to your backend or mock API.
-* You may choose any database of your choice (e.g., SQLite, MongoDB, MySQL, etc.) or you can use a mock API for data persistence.
-* Implement error handling and validation for form submissions.
-* Write clean and maintainable code, following best practices.
-* Provide clear instructions on how to run the application locally and any setup steps required.
+### Prerequisites
 
-### Tools
-You may choose to use any IDE (Integrated Development Environment) tools you are comfortable with.
+- Node.js v18 or higher (tested on v20.17.0) — https://nodejs.org/
+- npm (comes bundled with Node.js)
+- Git — https://git-scm.com/
 
-## Your Task
-Create a simple CRUD application:
-1. You need to create a 2-page web application using TypeScript and React. 
-2. The application should allow users to create, update, fetch, and display news articles in a database. 
+No additional database installation is required. The sql.js library runs in pure JavaScript and stores data in a local file (`server/articles.db`).
 
-### Page 1: Create / Update News Articles
-Design a web page with a form to create or update news articles. The form should include the following fields for a news article:
-* Article Title (text input)
-* Article Summary (textarea)
-* Article date (date input)
-* Publisher Of Article (text input)
+### Installation
 
-When the form is submitted:
-* If all fields are filled, the article should be created or updated in the database.
-* If any field is missing, show appropriate error messages and prevent submission.
-* After successful submission, clear the form fields so that user can input next article
-* Provide a navigation link to the fetch/display page.
+1. Clone the repository
 
-### Page 2: Fetch / Display News Articles
-Design a web page to fetch and display the articles from the database.
-* Fetch the articles when the page loads and display them in a visually appealing way (e.g., as a list or table). You can display publisher of article/title/summary and date of article
-* Provide a navigation link to the update article.
+```bash
+   git clone https://github.com/jyyong34/news-article-assignment.git
+   cd news-article-assignment
+```
 
-Sample page design for guidance
-![Display Page Design](https://github.com/chunyang-hs/news-article/blob/master/sample-display-page-design.png)
+2. Install backend dependencies
 
-### Bonus (Optional):
-You may also consider adding the following features if times permit:
-* Include a refresh button to fetch the latest articles from the database.
-* Add delete functionality to remove articles from the database.
-* Implement pagination or infinite scrolling for fetching and displaying articles.
-* Add search functionality to filter articles based on specific criteria.
-* Use a state management library like Redux or MobX to manage the application's state.
+```bash
+   cd server
+   npm install
+```
 
-## Final Notes
-Feel free to adjust the requirements and scope of the assignment according to your preferences and time constraints. 
-Remember to include clear instructions and any necessary information for running the application. 
+3. Install frontend dependencies
 
-Good luck with your assignment, and feel free to ask any questions if you need further assistance!
+```bash
+   cd ../client
+   npm install
+```
+
+### Running the Application
+
+You will need two terminals open: one for the backend, one for the frontend.
+
+#### Terminal 1 — Start the backend
+
+```bash
+cd server
+npm run dev
+```
+
+The backend will start on http://localhost:3001. On first run, it auto-creates the SQLite database and seeds 5 sample articles.
+
+You should see:
+Seeded 5 sample articles into the database
+Server running on http://localhost:3001
+API available at http://localhost:3001/api/articles
+
+#### Terminal 2 — Start the frontend
+
+```bash
+cd client
+npm run dev
+```
+
+The frontend will start on http://localhost:5173.
+
+Open http://localhost:5173 in your browser to use the app.
+
+---
+
+## API Reference
+
+All endpoints are prefixed with `/api/articles`. The frontend uses Vite's proxy to forward requests, so `/api/*` calls automatically reach `http://localhost:3001`.
+
+| Method | Endpoint | Description | Query Params |
+|--------|----------|-------------|--------------|
+| GET | `/api/articles` | List articles (paginated, searchable) | `page`, `limit`, `search` |
+| GET | `/api/articles/:id` | Get a single article | — |
+| POST | `/api/articles` | Create a new article | — |
+| PUT | `/api/articles/:id` | Update an existing article | — |
+| DELETE | `/api/articles/:id` | Delete an article | — |
+| GET | `/api/health` | Health check | — |
+
+### Example: Fetch with search and pagination
+GET http://localhost:3001/api/articles?page=1&limit=5&search=noodles
+
+### Article schema (POST/PUT body)
+
+```json
+{
+  "title": "Article title",
+  "summary": "Article summary text",
+  "date": "2026-05-15",
+  "publisher": "Saigon Times"
+}
+```
+
+---
+
+## Form Validation Rules
+
+All rules are enforced both client-side (Zod) and server-side (Express):
+
+| Field | Rules |
+|-------|-------|
+| Title | Required, 3–200 characters |
+| Summary | Required, 10–2000 characters |
+| Date | Required, valid date, not in the future |
+| Publisher | Required, max 100 characters |
+
+---
+
+## Pages
+
+### Page 1 — Create / Update Articles (`/create` and `/edit/:id`)
+- Form with title, summary, date, and publisher fields
+- Real-time inline validation messages
+- On successful create: form clears for next entry
+- On successful update: navigates back to the list page
+- Back to List link for navigation
+
+### Page 2 — Articles List (`/`)
+- Paginated card layout (5 per page)
+- Live search by title or publisher (debounced, 400ms)
+- Refresh button
+- Edit and Delete buttons on each article
+- New Article link to the form
+
+---
+
+## Notes
+
+- The SQLite database file (`server/articles.db`) is gitignored. It is regenerated on first server start with seed data.
+- Both client-side and server-side validation are implemented as defense-in-depth.
+- Search is implemented as a backend SQL LIKE query for proper integration with pagination.
+- The frontend uses Vite's dev proxy (`/api` to `http://localhost:3001`) so there are no CORS issues in development.
+
+---
+
+## Author
+
+jyyong34 — submitted as part of the Handshakes.ai front-end developer take-home assignment.
+
+## License
+
+This project was created for evaluation purposes only.
